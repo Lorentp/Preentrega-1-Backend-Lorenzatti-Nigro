@@ -31,7 +31,7 @@ class CartManager {
     const cart = carts.find((cart) => cart.id == id);
 
     if (cart) {
-      return cart.poducts;
+      return cart.products;
     } else {
       console.log("carrito no encontrado");
     }
@@ -50,12 +50,13 @@ class CartManager {
     try {
       const carts = await this.getCarts();
       const cart = carts.find((cart) => cart.id == cartId);
-
-      const prodInCart = cart.products.find((p) => p.product === productId);
-      if (prodInCart) {
-        prodInCart.quantity += quantity;
-      } else {
-        cart.products.push({ product: productId, quantity });
+      if (cart) {
+        const prodInCart = cart.products.find((p) => p.product === productId);
+        if (prodInCart) {
+          prodInCart.quantity += quantity;
+        } else {
+          cart.products.push({ product: productId, quantity });
+        }
       }
       await fs.writeFile(this.path, JSON.stringify(carts, null, 2));
       return cart;

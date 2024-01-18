@@ -1,75 +1,8 @@
-<header>
+<nav>
+  <h1>José Agustín Lorenzatti Nigro</h1>
+  <a href="/realtimeproducts"><button>Ir a "realTimeProducts"</button></a>
+</nav>
+<div class="container">
 
-      <h1>José Agustín Lorenzatti Nigro</h1>
-      
-      <h2>Gaming Shop</h2>
-      <h2>Compra los mejores juegos del momento al mejor precio</h2>
-      <div class="dolar-price">
-        <h1>Precio del dolar:</h1>
-        <h2 id="dolar"></h2>
-      </div>
-      <br />
-      <nav>
-        <ul>
-          <li><button class="products-category button-index active" id="all">
-              Todos los Productos
-          </button>
-        </li>
-        </ul>
-        <ul class="categories">
-          <li>
-            <button class="products-category button-index" id="action">
-            Accion
-          </button>
-        </li>
-
-          <li>
-            <button class="products-category button-index" id="strategy">
-            Estrategia
-          </button>
-        </li>
-
-          <li>
-            <button class="products-category button-index" id="indie">
-            Indie 
-          </button>
-        </li>
-
-          <li>
-            <button class="products-category button-index" id="rpg">
-            RPG
-          </button>
-        </li>
-
-          <li>
-            <button class="products-category button-index" id="simulator">
-            Simuladores
-          </button>
-        </li>
-
-          <li>
-            <button class="products-category button-index" id="survival">
-            Survival
-          </button>
-        </li>
-
-
-
-        <li class="cart-button"><a href="./cart.html" >
-          <i class="bi bi-cart4">
-        </i>
-        Carrito
-        <span id="number">0</span></li>
-      </a>
-
-      </ul>  
-
-     </nav>
-  </header>
-    
-  <input type="search" id="inputSearch" placeholder="......">
-
-  <div class="container" id="container"></div>
-
-
-<script src="js/index.js"></script>
+  {{>card}}
+</div>

@@ -1,0 +1,26 @@
+<h1>José Agustín Lorenzatti Nigro</h1>
+<nav><a href="/"><button>Volver al home</button></a></nav>
+
+  <div class="">
+    <h2>Ingrese el producto que desea agregar</h2>
+  </div>
+  <form action="/api/products/add" method="POST" id="newProductForm">    
+      <input type="text" id="title" placeholder="Titulo"/>    
+      <input type="text" id="description" placeholder="Description"/>    
+      <input type="number" id="price" placeholder="Precio"/>   
+      <input type="text" id="image" placeholder="URL de la imagen"/>  
+      <input type="text" id="code" placeholder="Codigo"/>    
+      <input type="text" id="stock" placeholder="Stock"/>   
+      <input type="text" id="category" placeholder="Categoria"/> 
+      <select id="status">
+          <option value="true">Activo</option>
+          <option value="false">Inactivo</option>
+      </select>
+      <button type="button" class="" id="addProductBtn">Enviar</button>   
+  </form>
+</div>
+
+<div id="productContainerRealTime" class="container"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<script src="js/index.js"></script>

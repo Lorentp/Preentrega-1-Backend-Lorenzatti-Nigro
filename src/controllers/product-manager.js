@@ -27,7 +27,6 @@ class ProductManager {
       console.log("No se pudo guardar el archivo", error);
     }
   }
-
   async addProduct({
     title,
     description,
@@ -35,75 +34,40 @@ class ProductManager {
     image,
     code,
     stock,
-    status = true,
+    category,
   }) {
     try {
-      const products = await this.readFile(this.path, "utf-8");
+      const arrayProducts = await this.readFile();
       const id = uuid();
-      let newProduct = {
-        title,
-        description,
-        price,
-        image,
-        code,
-        stock,
-        status,
-        id,
-      };
 
-      if (products.some((item) => item.code === code)) {
-        console.log("Dos productos no pueden compartir el mismo codigo.");
+      if (!title || !description || !price || !code || !stock || !category) {
+        console.log("Todos los campos son obligatorios");
         return;
       }
 
-      products.push(newProduct);
-
-      await this.saveFile(products);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async addProduct(newObj) {
-    const products = await this.readFile(this.path, "utf-8");
-    let { title, description, price, image, code, stock, status, category } =
-      newObj;
-    if (
-      !title ||
-      !description ||
-      !price ||
-      !image ||
-      !code ||
-      !stock ||
-      !category
-    ) {
-      console.log("Todos los campos son obligatorios");
-      return;
-    }
-    const id = uuid();
-    try {
-      if (products.some((item) => item.code === code)) {
-        console.log("Dos productos no pueden compartir el mismo codigo.");
+      if (arrayProducts.some((item) => item.code === code)) {
+        console.log("El código debe ser único");
         return;
       }
+
       const newProduct = {
-        id,
         title,
         description,
         price,
         image,
         code,
         stock,
-        status,
         category,
+        status: true,
+        id,
       };
 
-      products.push({ ...newProduct });
-
-      await this.saveFile(products);
-      return newObj;
+      arrayProducts.push(newProduct);
+      await this.saveFile(arrayProducts);
+      return newProduct;
     } catch (error) {
-      console.log("Ha ocurrido un error:", error);
+      console.log("Error al agregar producto", error);
+      throw error;
     }
   }
 
@@ -132,14 +96,41 @@ class ProductManager {
     }
   }
 
-  async updateProduct(id, { ...data }) {
+  async updateProduct(id, { updatedProduct }) {
     try {
       const products = await this.getProducts();
       const index = products.findIndex((item) => item.id == id);
 
       if (index !== -1) {
-        products[index] = { id, ...data };
-        await this.saveFile(products);
+        updateproduct[index] = {
+          id: arrayProducts[index].id,
+          title: updatedProduct.title
+            ? updatedProduct.title
+            : arrayProducts[index].title,
+          description: updatedProduct.description
+            ? updatedProduct.description
+            : arrayProducts[index].description,
+          price: updatedProduct.price
+            ? updatedProduct.price
+            : arrayProducts[index].price,
+          image: updatedProduct.image
+            ? updatedProduct.image
+            : arrayProducts[index].image,
+          code: updatedProduct.code
+            ? updatedProduct.code
+            : arrayProducts[index].code,
+          stock: updatedProduct.stock
+            ? updatedProduct.stock
+            : arrayProducts[index].stock,
+          status: updatedProduct.status
+            ? updatedProduct.status
+            : arrayProducts[index].status,
+          category: updatedProduct.category
+            ? updatedProduct.category
+            : arrayProducts[index].category,
+        };
+        arrayProducts[index] = updateproduct;
+        await this.saveFile(arrayProducts);
         return [index];
       } else {
         console.log("No se pudo encontrar el producto");

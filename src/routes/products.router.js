@@ -6,7 +6,7 @@ const manager = new ProductManager("./src/models/products.json");
 const productsJSON = "./src/products.json";
 
 router.get("/:pid", async (req, res) => {
-  let pid = parseInt(req.params.pid);
+  let pid = req.params.pid;
   try {
     let product = await manager.getProductsById(pid);
     if (product) {
@@ -38,34 +38,33 @@ router.post("/", async (req, res) => {
   try {
     const newProduct = req.body;
     await manager.addProduct(newProduct);
-    res.send({
-      status: "success",
-      message: "Producto creado",
-      product: { newProduct },
-    });
+    res.status(201).json({ message: "Producto agregado exitosamente" });
   } catch (error) {
-    console.log("Ha ocurrido un error:", error);
+    console.error(error);
+    res.status(500).json({ message: "Error al agregar el producto" });
   }
 });
 
-router.put("/:pid", async (req, res) => {
+router.put("/update/:pid", async (req, res) => {
   const { pid } = req.params;
   const { ...data } = req.body;
   try {
     await manager.updateProduct(pid, { ...data });
-    res.send({ status: "success", message: "producto actualizado" });
+    res.json({ message: "Producto Actualizado Exitosamente" });
   } catch (error) {
-    console.log("Ha ocurrido un error:", error);
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar el producto" });
   }
 });
 
-router.delete("/:pid", async (req, res) => {
+router.delete("/delete/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
     await manager.deleteProduct(pid);
-    res.send("Producto eliminado");
+    res.json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
-    res.send("No se pudo eliminar el producto", error);
+    console.error(error);
+    res.status(500).json({ message: "Error al eliminar el producto" });
   }
 });
 

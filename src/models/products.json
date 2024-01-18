@@ -10,26 +10,6 @@
     "id": "e4828a41-2b46-40ad-afca-c2b8d20949fb"
   },
   {
-    "title": "GTA V",
-    "description": "Grand Theft Auto V es un juego de acción y aventuras, el quinto de la serie GTA. Como ya es tradición en los juegos de esta serie, se obtienen puntos mediante la comisión de delitos. El juego alterna entre la narrativa visual y la jugabilidad en tercera y en primera persona. El jugador toma el papel de tres criminales tratando de huir de una determinada agencia del gobierno y cometiendo asaltos. No se elige un solo personaje para jugar, la narrativa del juego salta de un personaje a otro.",
-    "price": 11.56,
-    "image": "https://www.instant-gaming.com/images/products/186/380x218/186.jpg?v=1647095361",
-    "code": "gta-v",
-    "stock": 8,
-    "status": true,
-    "id": "cadba74b-835f-4ecd-be2d-a166c8ab95ed"
-  },
-  {
-    "title": "Hell Let Loose",
-    "description": "Hell Let Loose para PC es un shooter multijugador bestial en primera persona ambientado durante la Segunda Guerra Mundial. El juego se especializa en batallas de cien jugadores, pero no eres tú contra noventa y nueve feroces otros. En cambio, se te clasifica en unidades de seis soldados cada una, y todas las unidades (alrededor de ocho por bando) se dividen en dos equipos.",
-    "price": 22.48,
-    "image": "https://www.instant-gaming.com/images/products/4640/380x218/4640.jpg?v=1650980389",
-    "code": "hell-let-loose",
-    "stock": 15,
-    "status": true,
-    "id": "b8e71d85-9239-47b4-a4c7-bcaca0ce262a"
-  },
-  {
     "title": "Age Of Empires II DE",
     "description": "Age of Empires II: Definitive Edition es el relanzamiento del clásico de estrategia en tiempo real en su vigésimo aniversario. El juego conserva todo el encanto y la popularidad del original, pero lo combina con veinte años de mejoras en el mundo de los juegos: gráficos de alta definición, jugabilidad y visuales mejorados y cuatro nuevas civilizaciones, así como una nueva campaña para un jugador llamada The Last Khans.",
     "price": 7.82,
@@ -40,16 +20,6 @@
     "id": "560988cd-297a-4c20-99a5-41d4b256d2e0"
   },
   {
-    "title": "Stardew Valley",
-    "description": "Stardew Valley es un juego que permite a los jugadores alejarse del ajetreo y el bullicio de su vida diaria, ya sea en la escuela o en el trabajo, y ver cómo es hacerse cargo de una granja un poco deteriorada, trabajar para cosechar, recaudar dinero, hacer manualidades para los vecinos y mucho más. Este juego de simulación de granja es un RPG de acción, aunque la acción es muy relajada y está más orientada a la agricultura, en lugar de la acción de batalla de un RPG más clásico.",
-    "price": 15.08,
-    "image": "https://www.instant-gaming.com/images/products/1767/380x218/1767.jpg?v=1608049517",
-    "code": "stardew-valley",
-    "stock": 12,
-    "status": true,
-    "id": "97b11d94-0ef9-4d00-aca9-7a66d54f90c6"
-  },
-  {
     "title": "Assasin's Creed Odyssey",
     "description": "Elige tu destino en Assassin's Creed Odyssey.Pasa de la marginación a la gloria embarcándote en una odisea para descubrir los secretos de tu pasado y cambiar el destino de la antigua Grecia.Recorre frondosos bosques, islas volcánicas y ciudades bulliciosas en un viaje de exploración y encuentros en un mundo en guerra forjado por Dioses y hombres.Tus decisiones influirán en el devenir de tu odisea. Tu juego puede tener distintos finales gracias al nuevo sistema de diálogos y a las decisiones que tomes. Personaliza tu equipo, el barco y tus habilidades especiales para convertirte en leyenda. Demuestra tus habilidades bélicas en batallas a gran escala entre Atenas y Esparta con cientos de soldados. Embiste y ábrete paso a través de flotas enteras en las batallas navales del mar Egeo.",
     "price": 35.63,
@@ -58,26 +28,6 @@
     "stock": 12,
     "status": true,
     "id": "9b3d3304-7156-42d2-970d-fa92f8b250d9"
-  },
-  {
-    "title": "God Of War",
-    "description": "God of War fue objeto de rumores durante meses, desde aproximadamente la mitad de 2021 hasta que los desarrolladores finalmente sacaron a los jugadores de su lenta espera y confirmaron el lanzamiento en PC para enero de 2022. Es la versión para PC del juego God of War de 2018, que inicialmente solo estaba disponible en PlayStation. El título permite a los jugadores de PC disfrutar del intenso juego de acción y aventuras del dios nórdico.",
-    "price": 21.47,
-    "image": "https://www.instant-gaming.com/images/products/7325/380x218/7325.jpg?v=1683627071",
-    "code": "god-of-war",
-    "stock": 16,
-    "status": true,
-    "id": "e716a136-20de-4db0-8191-14f7f45f4365"
-  },
-  {
-    "title": "Terraria",
-    "description": "Terraria es un juego sandbox de exploración 2D en el que el jugador busca diseñar el mundo de acuerdo con sus propias elecciones y sus habilidades en combate, elaboración y recolección de recursos también.",
-    "price": 7.57,
-    "image": "https://www.instant-gaming.com/images/products/932/380x218/932.jpg?v=1683791474",
-    "code": "terraria",
-    "stock": 7,
-    "status": true,
-    "id": "cd56f60a-bd48-4db1-823d-e5785259e147"
   },
   {
     "title": "Planet Zoo",
@@ -108,5 +58,27 @@
     "code": "frostpunk",
     "stock": 22,
     "category": "survival"
+  },
+  {
+    "title": "GTA V",
+    "description": "Grand Theft Auto V es un juego de acción y aventuras, el quinto de la serie GTA. Como ya es tradición en los juegos de esta serie, se obtienen puntos mediante la comisión de delitos. El juego alterna entre la narrativa visual y la jugabilidad en tercera y en primera persona. El jugador toma el papel de tres criminales tratando de huir de una determinada agencia del gobierno y cometiendo asaltos. No se elige un solo personaje para jugar, la narrativa del juego salta de un personaje a otro.",
+    "price": "11",
+    "code": "gta-v",
+    "image": "https://www.instant-gaming.com/images/products/186/380x218/186.jpg?v=1647095361",
+    "stock": "11",
+    "category": "Accion",
+    "status": true,
+    "id": "e00d224a-4b1b-4373-b5c0-7725fafd9fbf"
+  },
+  {
+    "title": "Hell Let Loose",
+    "description": "Hell Let Loose para PC es un shooter multijugador bestial en primera persona ambientado durante la Segunda Guerra Mundial. El juego se especializa en batallas de cien jugadores, pero no eres tú contra noventa y nueve feroces otros. En cambio, se te clasifica en unidades de seis soldados cada una, y todas las unidades (alrededor de ocho por bando) se dividen en dos equipos.",
+    "price": "22.48",
+    "image": "https://www.instant-gaming.com/images/products/4640/380x218/4640.jpg?v=1650980389",
+    "code": "hell-let-loose",
+    "stock": "20",
+    "category": "Accion",
+    "status": true,
+    "id": "99cbc637-d3f3-4e82-be1a-08a479c9206f"
   }
 ]

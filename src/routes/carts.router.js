@@ -16,9 +16,9 @@ router.post("/", async (req, res) => {
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
-    const carts = await manager.getCartsProducts(cid);
-    if (carts) {
-      res.json(carts);
+    const cart = await manager.getCartsProducts(cid);
+    if (cart) {
+      res.json(cart);
     } else {
       res.json({
         message: "No se encontro el carrito, revise el ID solicitado",
