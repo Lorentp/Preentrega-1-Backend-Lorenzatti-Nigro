@@ -14,12 +14,14 @@ class ProductManager {
     try {
       if (!title || !description || !price || !code || !stock || !category) {
         console.log("Todos los campos son obligatorios");
+        res.send("Todos los campos son obligatorios");
         return;
       }
 
       const productexists = await ProductModel.findOne({ code: code });
       if (productexists) {
         console.log("El codigo debe ser unico");
+        res.send("El codigo debe ser unico");
         return;
       }
 
@@ -32,14 +34,13 @@ class ProductManager {
         stock,
         category,
         status: true,
-        id,
         thumbnails,
       });
 
       await newProduct.save();
     } catch (error) {
-      console.log("Error al agregar producto", error);
-      throw error;
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -47,36 +48,45 @@ class ProductManager {
     try {
       const products = await ProductModel.find();
       return products;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      res.send("Ha ocurrido un error");
+    }
   }
 
-  async getProductById(_id) {
+  async getProductById(id) {
     try {
-      const product = await ProductModel.findById(_id);
+      const product = await ProductModel.findById(id);
       if (!product) {
         console.log("Error, no se encontro el producto");
+        res.send("Error, no se encontro el producto");
         return null;
       }
 
       return product;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      res.send("Ha ocurrido un error");
+    }
   }
 
-  async updateProduct(id, { updatedProduct }) {
+  async updateProduct(id, updatedProductData) {
     try {
-      const updateProduct = await ProductManager.findByIdAndUpdate(
+      const updatedProduct = await ProductModel.findByIdAndUpdate(
         id,
-        updatedProduct
+        updatedProductData
       );
 
-      if (!updateProduct) {
-        console.log();
+      if (!updatedProduct) {
+        console.log("Error, no se encontro el producto");
+        res.json("Error, no se encontro el producto");
         return null;
       }
 
-      return updateProduct;
+      return updatedProduct;
     } catch (error) {
-      console.log("No se pudo actualizar el producto", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -85,13 +95,15 @@ class ProductManager {
       const deletedProduct = await ProductModel.findByIdAndDelete(id);
 
       if (!deletedProduct) {
-        console.log();
+        console.log("Error, no se encontro el producto");
+        res.json("Error, no se encontro el producto");
         return null;
       }
 
       return deletedProduct;
     } catch (error) {
-      console.log("No se pudo eliminar el producto", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 }

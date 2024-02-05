@@ -42,11 +42,13 @@ class ProductManager {
 
       if (!title || !description || !price || !code || !stock || !category) {
         console.log("Todos los campos son obligatorios");
+        res.send("Todos los campos son obligatorios");
         return;
       }
 
       if (arrayProducts.some((item) => item.code === code)) {
         console.log("El código debe ser único");
+        res.send("El código debe ser único");
         return;
       }
 
@@ -66,8 +68,8 @@ class ProductManager {
       await this.saveFile(arrayProducts);
       return newProduct;
     } catch (error) {
-      console.log("Error al agregar producto", error);
-      throw error;
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -77,7 +79,8 @@ class ProductManager {
       const responseJSON = JSON.parse(response);
       return responseJSON;
     } catch (error) {
-      console.log("Ha ocurrido un error", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -87,55 +90,33 @@ class ProductManager {
       const product = arrayProducts.find((item) => item.id === id);
       if (!product) {
         console.log("Lo sentimos, producto no encontrado");
+        res.send("Lo sentimos, producto no encontrado");
       } else {
-        console.log("Su producto es: ");
+        console.log("Su producto es:", product);
+        res.send("Su producto es:", product);
         return product;
       }
     } catch (error) {
-      console.log("N se pudo leer el archivo", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
-  async updateProduct(id, { updatedProduct }) {
+  async updateProduct(id, { ...updatedProduct }) {
     try {
       const products = await this.getProducts();
-      const index = products.findIndex((item) => item.id == id);
+      const index = await products.findIndex((product) => product.id == id);
 
       if (index !== -1) {
-        updateproduct[index] = {
-          id: arrayProducts[index].id,
-          title: updatedProduct.title
-            ? updatedProduct.title
-            : arrayProducts[index].title,
-          description: updatedProduct.description
-            ? updatedProduct.description
-            : arrayProducts[index].description,
-          price: updatedProduct.price
-            ? updatedProduct.price
-            : arrayProducts[index].price,
-          image: updatedProduct.image
-            ? updatedProduct.image
-            : arrayProducts[index].image,
-          code: updatedProduct.code
-            ? updatedProduct.code
-            : arrayProducts[index].code,
-          stock: updatedProduct.stock
-            ? updatedProduct.stock
-            : arrayProducts[index].stock,
-          status: updatedProduct.status
-            ? updatedProduct.status
-            : arrayProducts[index].status,
-          category: updatedProduct.category
-            ? updatedProduct.category
-            : arrayProducts[index].category,
-        };
-        arrayProducts[index] = updateproduct;
-        await this.saveFile(arrayProducts);
+        products[index] = { ...updatedProduct, status: true, id: id };
+        await this.saveFile(products);
         return [index];
       } else {
         console.log("No se pudo encontrar el producto");
+        res.send("No se encontro el producto");
       }
     } catch (error) {
+      res.send("No se pudo actualizar el producto");
       console.log("No se pudo actualizar el producto", error);
     }
   }
@@ -153,7 +134,8 @@ class ProductManager {
         console.log("No se pudo encontrar el producto");
       }
     } catch (error) {
-      console.log("No se pudo eliminar el producto", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 }

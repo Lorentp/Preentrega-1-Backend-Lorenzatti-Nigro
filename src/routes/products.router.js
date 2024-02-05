@@ -14,7 +14,8 @@ router.get("/:pid", async (req, res) => {
       res.send("Producto no encontrado");
     }
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.send("Ha ocurrido un error");
   }
 });
 
@@ -29,7 +30,8 @@ router.get("/", async (req, res) => {
       res.send(arrayProducts);
     }
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.send("Ha ocurrido un error");
   }
 });
 
@@ -39,20 +41,24 @@ router.post("/", async (req, res) => {
     await productManager.addProduct(newProduct);
     res.status(201).json({ message: "Producto agregado exitosamente" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al agregar el producto" });
+    console.log(error);
+    res.send("Ha ocurrido un error");
   }
 });
 
 router.put("/update/:pid", async (req, res) => {
-  const { pid } = req.params;
-  const { ...data } = req.body;
+  const id = req.params.pid;
+  const updatedProduct = req.body;
+
   try {
-    await productManager.updateProduct(pid, { ...data });
-    res.json({ message: "Producto Actualizado Exitosamente" });
+    await productManager.updateProduct(id, updatedProduct);
+    console.log("Producto actualizado correctamtente", updatedProduct);
+    res.json({
+      message: "Producto actualizado exitosamente",
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al actualizar el producto" });
+    console.log(error);
+    res.send("Ha ocurrido un error");
   }
 });
 
@@ -62,8 +68,8 @@ router.delete("/delete/:pid", async (req, res) => {
     await productManager.deleteProduct(pid);
     res.json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al eliminar el producto" });
+    console.log(error);
+    res.send("Ha ocurrido un error");
   }
 });
 

@@ -14,7 +14,8 @@ class CartManager {
       const resJSON = JSON.parse(res);
       return resJSON;
     } catch (error) {
-      console.log("Ha ocurrido un error:", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -22,7 +23,8 @@ class CartManager {
     try {
       await fs.writeFile(this.path, JSON.stringify(carts, null, 2));
     } catch (error) {
-      console.log("No se pudo guardar el archivo", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -33,7 +35,8 @@ class CartManager {
     if (cart) {
       return cart.products;
     } else {
-      console.log("carrito no encontrado");
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 
@@ -61,7 +64,8 @@ class CartManager {
       await fs.writeFile(this.path, JSON.stringify(carts, null, 2));
       return cart;
     } catch (error) {
-      console.log("Ha ocurrido un error:", error);
+      console.log(error);
+      res.send("Ha ocurrido un error");
     }
   }
 }
