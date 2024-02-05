@@ -1,5 +1,7 @@
 const socket = io();
 
+/*products*/
+
 socket.on("products", (data) => {
   productsDom(data);
 });
@@ -17,9 +19,9 @@ const productsDom = (products) => {
     <div class="game-title">
       <h5>${product.title}</h5>
       <p>$${product.price}</p>
-      <p>${product.id}</p>
+      
     </div>
-    <button>Eliminar producto</button>`;
+    <button class="delete-button">Eliminar producto</button>`;
 
     productContainer.appendChild(card);
 

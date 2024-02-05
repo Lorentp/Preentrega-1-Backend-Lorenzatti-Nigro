@@ -1,0 +1,33 @@
+<div class="form-container">
+  <form action="/api/products/add" method="POST" id="newProductForm">
+    <div>
+      <h2>Ingrese el producto que desea agregar</h2>
+    </div>
+    <div class="form-input-container">
+      <input type="text" id="title" placeholder="Titulo" />
+    </div>
+    <div class="form-input-container">
+      <input type="text" id="description" placeholder="Description" />
+    </div>
+    <div class="form-input-container">
+      <input type="number" id="price" placeholder="Precio" />
+    </div>
+    <div class="form-input-container">
+      <input type="text" id="image" placeholder="URL de la imagen" />
+    </div>
+    <div class="form-input-container">
+      <input type="text" id="code" placeholder="Codigo" />
+    </div>
+    <div class="form-input-container">
+      <input type="text" id="stock" placeholder="Stock" />
+    </div>
+    <div class="form-input-container">
+      <input type="text" id="category" placeholder="Categoria" />
+    </div>
+    <div class="form-checkbox-container">
+      <input type="checkbox" /><label value="true">Activo</label>
+      <input type="checkbox" /><label value="false">Inactivo</label>
+    </div>
+    <button type="button" class="form-button" id="addProductBtn">Enviar</button>
+  </form>
+</div>

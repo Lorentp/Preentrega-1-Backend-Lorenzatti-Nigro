@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
-const CartManager = require("../controllers/cart-manager");
-const manager = new CartManager("./src/models/carts.json");
+const CartManager = require("../dao/db/carts-manager-db.js");
+const cartManager = new CartManager();
 
 router.post("/", async (req, res) => {
   try {
-    await manager.newCart();
+    await cartManager.newCart();
     res.send({ status: "success", message: "Carrito creado" });
   } catch (error) {
-    res.send("No se pudo crear el carrito");
+    res.send(error);
   }
 });
 
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
-    const cart = await manager.getCartsProducts(cid);
+    const cart = await cartManager.getCartsProducts(cid);
     if (cart) {
       res.json(cart);
     } else {
@@ -33,7 +33,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
   const { cid, pid } = req.params;
   const { quantity } = req.body;
   try {
-    await manager.addProductCart(cid, pid, quantity);
+    await cartManager.addProductToCart(cid, pid, quantity);
     res.send("Producto agregado al carrito");
   } catch (error) {
     res.send("Error, no se pudo agregar el producto al carrito");

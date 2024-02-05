@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../controllers/product-manager");
-const manager = new ProductManager("./src/models/products.json");
-const productsJSON = "./src/models/products.json";
+const ProductManager = require("../dao/db/product-manager-db.js");
+const productManager = new ProductManager();
 
 router.get("/", async (req, res) => {
-  let arrayProducts = await manager.readFile(productsJSON);
+  let arrayProducts = await productManager.getProducts();
   try {
     res.render("index", { arrayProducts });
   } catch (error) {
@@ -16,6 +15,14 @@ router.get("/", async (req, res) => {
 router.get("/realtimeproducts", async (req, res) => {
   try {
     res.render("realTimeProducts");
+  } catch (error) {
+    console.log("Error del servidor", error);
+  }
+});
+
+router.get("/chat", async (req, res) => {
+  try {
+    res.render("chat");
   } catch (error) {
     console.log("Error del servidor", error);
   }
