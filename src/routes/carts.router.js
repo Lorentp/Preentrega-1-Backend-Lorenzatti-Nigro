@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const CartManager = require("../dao/db/carts-manager-db.js");
-const { updateSearchIndex } = require("../dao/models/products.model.js");
 const cartManager = new CartManager();
 
 router.post("/", async (req, res) => {
@@ -11,7 +10,10 @@ router.post("/", async (req, res) => {
     res.send({ status: "success", message: "Carrito creado" });
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -28,7 +30,10 @@ router.get("/:cid", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -46,7 +51,10 @@ router.post("/:cid/products/:pid", async (req, res) => {
     res.json(updatedCart.products);
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 

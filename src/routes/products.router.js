@@ -3,11 +3,12 @@ const router = express.Router();
 
 const ProductManager = require("../dao/db/product-manager-db.js");
 const productManager = new ProductManager();
+const ProductModel = require("../dao/models/products.model.js");
 
 router.get("/:pid", async (req, res) => {
   let pid = req.params.pid;
   try {
-    let product = await productManager.getProductsById(pid);
+    let product = await productManager.getProductById(pid);
     if (product) {
       res.send(product);
     } else {
@@ -15,23 +16,61 @@ router.get("/:pid", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
 router.get("/", async (req, res) => {
+  const { limit = 10, page = 1, sort, query: filterQuery } = req.query;
+
+  const filter = {};
+  if (filterQuery) {
+    filter.category = filterQuery;
+  }
+
   try {
-    let limit = req.query.limit;
-    let arrayProducts = await productManager.getProducts();
-    if (limit) {
-      const arrayProductsLimit = arrayProducts.slice(0, limit);
-      res.send(arrayProductsLimit);
-    } else {
-      res.send(arrayProducts);
-    }
+    const arrayProducts = await ProductModel.paginate(filter, {
+      limit,
+      page,
+      sort,
+    });
+
+    const ProductList = arrayProducts.docs.map((product) => {
+      const { id, ...data } = product.toObject();
+      return data;
+    });
+
+    const prevPage = arrayProducts.hasPrevPage
+      ? `/api/products?limit=${limit}&page=${arrayProducts.prevPage}&sort=${sort}&query=${filterQuery}`
+      : null;
+    const nextPage = arrayProducts.hasNextPage
+      ? `/api/products?limit=${limit}&page=${arrayProducts.nextPage}&sort=${sort}&query=${filterQuery}`
+      : null;
+
+    const response = {
+      status: "success",
+      payload: ProductList,
+      totalDocs: arrayProducts.totalDocs,
+      totalPages: arrayProducts.totalPages,
+      prevPage: arrayProducts.prevPage,
+      nextPage: arrayProducts.nextPage,
+      page: arrayProducts.page,
+      hasPrevPage: arrayProducts.hasPrevPage,
+      hasNextPage: arrayProducts.hasNextPage,
+      prevPage,
+      nextPage,
+    };
+
+    res.json(response);
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -42,7 +81,10 @@ router.post("/", async (req, res) => {
     res.status(201).json({ message: "Producto agregado exitosamente" });
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -58,7 +100,10 @@ router.put("/update/:pid", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -69,7 +114,10 @@ router.delete("/delete/:pid", async (req, res) => {
     res.json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
     console.log(error);
-    res.send("Ha ocurrido un error");
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 

@@ -9,6 +9,10 @@ router.get("/", async (req, res) => {
     res.render("index", { arrayProducts });
   } catch (error) {
     console.log("Error del servidor", error);
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -17,6 +21,10 @@ router.get("/realtimeproducts", async (req, res) => {
     res.render("realTimeProducts");
   } catch (error) {
     console.log("Error del servidor", error);
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 
@@ -25,6 +33,10 @@ router.get("/chat", async (req, res) => {
     res.render("chat");
   } catch (error) {
     console.log("Error del servidor", error);
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
   }
 });
 

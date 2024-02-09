@@ -1,8 +1,8 @@
 {{#each arrayProducts}}
   <div class="card-container-home">
     <div class="card-container-title">
-      <h3>{{this.title}}</h3>
-      <p>Precio: ${{this.price}}</p>
+      <h3>{{this.payload.title}}</h3>
+      <p>Precio: ${{this.payload.price}}</p>
       <button>Agregar al carrito</button>
     </div>
   </div>

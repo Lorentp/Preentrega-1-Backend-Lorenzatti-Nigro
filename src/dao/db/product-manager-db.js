@@ -14,14 +14,12 @@ class ProductManager {
     try {
       if (!title || !description || !price || !code || !stock || !category) {
         console.log("Todos los campos son obligatorios");
-        res.send("Todos los campos son obligatorios");
         return;
       }
 
       const productexists = await ProductModel.findOne({ code: code });
       if (productexists) {
         console.log("El codigo debe ser unico");
-        res.send("El codigo debe ser unico");
         return;
       }
 
@@ -40,7 +38,6 @@ class ProductManager {
       await newProduct.save();
     } catch (error) {
       console.log(error);
-      res.send("Ha ocurrido un error");
     }
   }
 
@@ -50,7 +47,19 @@ class ProductManager {
       return products;
     } catch (error) {
       console.log(error);
-      res.send("Ha ocurrido un error");
+    }
+  }
+
+  async getLimitProducts(limit) {
+    try {
+      const arrayProducts = await ProductModel.find();
+      if (limit) {
+        return arrayProducts.slice(0, limit);
+      }
+
+      return arrayProducts;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -59,14 +68,15 @@ class ProductManager {
       const product = await ProductModel.findById(id);
       if (!product) {
         console.log("Error, no se encontro el producto");
-        res.send("Error, no se encontro el producto");
+        res.status(404).json({
+          message: "No se encontro el producto",
+        });
         return null;
       }
 
       return product;
     } catch (error) {
       console.log(error);
-      res.send("Ha ocurrido un error");
     }
   }
 
@@ -79,14 +89,13 @@ class ProductManager {
 
       if (!updatedProduct) {
         console.log("Error, no se encontro el producto");
-        res.json("Error, no se encontro el producto");
+
         return null;
       }
 
       return updatedProduct;
     } catch (error) {
       console.log(error);
-      res.send("Ha ocurrido un error");
     }
   }
 
@@ -96,14 +105,14 @@ class ProductManager {
 
       if (!deletedProduct) {
         console.log("Error, no se encontro el producto");
-        res.json("Error, no se encontro el producto");
+        res.status(404).json({
+          message: "No se encontro el producto",
+        });
         return null;
       }
-
       return deletedProduct;
     } catch (error) {
       console.log(error);
-      res.send("Ha ocurrido un error");
     }
   }
 }

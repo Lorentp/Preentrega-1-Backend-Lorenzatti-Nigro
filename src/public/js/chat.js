@@ -1,5 +1,6 @@
-/*Chat*/
 const socket = io();
+
+/*Chat*/
 
 let user;
 const chatbox = document.getElementById("chatBox");
