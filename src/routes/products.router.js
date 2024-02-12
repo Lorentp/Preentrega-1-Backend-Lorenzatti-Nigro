@@ -24,14 +24,22 @@ router.get("/:pid", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const { limit = 10, page = 1, sort, query: filterQuery } = req.query;
-
-  const filter = {};
-  if (filterQuery) {
-    filter.category = filterQuery;
-  }
+  let { limit, page, sort, query: filterQuery } = req.query;
 
   try {
+    limit = parseInt(limit) || 10;
+    page = parseInt(page) || 1;
+
+    const filter = {};
+    if (filterQuery) {
+      filter.category = filterQuery;
+    }
+
+    let sortOp = {};
+    if (sort) {
+      sortOp.price = sort === "asc" ? 1 : -1;
+    }
+
     const arrayProducts = await ProductModel.paginate(filter, {
       limit,
       page,
@@ -89,11 +97,16 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/update/:pid", async (req, res) => {
-  const id = req.params.pid;
+  const productId = req.params.pid;
   const updatedProduct = req.body;
+  const productExists = await productManager.getProductById(productId);
 
   try {
-    await productManager.updateProduct(id, updatedProduct);
+    if (!productExists) {
+      res.json({ message: "El producto no existe" });
+      return;
+    }
+    await productManager.updateProduct(productId, updatedProduct);
     console.log("Producto actualizado correctamtente", updatedProduct);
     res.json({
       message: "Producto actualizado exitosamente",

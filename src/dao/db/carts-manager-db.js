@@ -11,6 +11,14 @@ class CartsManager {
       console.log(error);
     }
   }
+  async getCarts() {
+    try {
+      const carts = await CartsModel.find();
+      return carts;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async getCartById(cartId) {
     try {
@@ -93,7 +101,7 @@ class CartsManager {
     }
   }
 
-  async cleanCart(cartId) {
+  async emptyCart(cartId) {
     try {
       const cart = await CartsModel.findByIdAndUpdate(cartId, {
         $set: { products: [] },
@@ -127,11 +135,11 @@ class CartsManager {
     }
   }
 
-  async updateCart(cartId, newProducts) {
+  async updateCart(cartId, productsToCart) {
     try {
       const updatedCart = await CartsModel.findByIdAndUpdate(
         cartId,
-        { products: newProducts },
+        { products: productsToCart },
         { new: true }
       );
 

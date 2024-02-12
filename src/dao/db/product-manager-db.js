@@ -68,9 +68,6 @@ class ProductManager {
       const product = await ProductModel.findById(id);
       if (!product) {
         console.log("Error, no se encontro el producto");
-        res.status(404).json({
-          message: "No se encontro el producto",
-        });
         return null;
       }
 

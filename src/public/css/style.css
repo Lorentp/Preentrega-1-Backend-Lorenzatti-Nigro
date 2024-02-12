@@ -80,6 +80,18 @@ a {
   padding: 10px 60px;
 }
 
+.add-to-cart {
+  padding: 10px 40px;
+  background-color: rgb(175, 174, 174);
+  border: 1px black solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease 0.3s;
+}
+.add-to-cart:hover {
+  background-color: #ff0000;
+  padding: 10px 60px;
+}
 /*Form*/
 
 .form-container {
