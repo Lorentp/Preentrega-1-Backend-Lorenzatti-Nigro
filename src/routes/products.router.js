@@ -82,7 +82,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const newProduct = req.body;
     await productManager.addProduct(newProduct);
@@ -98,7 +98,6 @@ router.post("/", async (req, res) => {
 
 router.put("/update/:pid", async (req, res) => {
   const productId = req.params.pid;
-  const updatedProduct = req.body;
   const productExists = await productManager.getProductById(productId);
 
   try {
@@ -106,7 +105,10 @@ router.put("/update/:pid", async (req, res) => {
       res.json({ message: "El producto no existe" });
       return;
     }
-    await productManager.updateProduct(productId, updatedProduct);
+    const updatedProduct = await productManager.updateProduct(
+      productId,
+      req.body
+    );
     console.log("Producto actualizado correctamtente", updatedProduct);
     res.json({
       message: "Producto actualizado exitosamente",

@@ -43,16 +43,37 @@ router.get("/chat", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-  const page = req.query.page || 1;
-  const limit = 4;
+  let { limit, page, sort, query: filterQuery } = req.query;
 
   try {
-    const products = await ProductModel.paginate({}, { limit, page });
+    limit = parseInt(limit) || 4;
+    page = parseInt(page) || 1;
+    let sortOp = {};
+    if (sort) {
+      sortOp.price = sort === "asc" ? 1 : -1;
+    }
+    const filter = {};
+    if (filterQuery) {
+      filter.category = filterQuery;
+    }
+
+    const products = await ProductModel.paginate(filter, {
+      limit,
+      page,
+      sort: sortOp,
+    });
 
     const productsFinal = products.docs.map((product) => {
       const { id, ...rest } = product.toObject();
       return rest;
     });
+
+    const prevLink = products.hasPrevPage
+      ? `/api/products?limit=${limit}&page=${products.prevPage}`
+      : null;
+    const nextLink = products.hasNextPage
+      ? `/api/products?limit=${limit}&page=${products.nextPage}`
+      : null;
 
     res.render("products", {
       title: "products",
@@ -63,6 +84,8 @@ router.get("/products", async (req, res) => {
       nextPage: products.nextPage,
       currentPage: products.page,
       totalPages: products.totalPages,
+      prevLink,
+      nextLink,
     });
   } catch (error) {
     console.log("Error del servidor", error);
@@ -95,7 +118,10 @@ router.get("/carts/:cid", async (req, res) => {
       console.log("Error, el carrito no existe");
       return;
     }
-    res.render("cart", { cartId, products: cart.products });
+    res.render("cart", {
+      cartId,
+      products: cart.products,
+    });
   } catch (error) {
     console.log("Error del servidor", error);
     res.status(404).json({

@@ -10,7 +10,12 @@
           <p>{{this.price}}</p>
           <p>Categoria:{{this.category}}</p>
         </div>
-        <button class="add-to-cart" id="{{this._id}}"></a>Agregar al carrito</button>
+        <form
+          action="api/carts/65ca2e389811a65db402ed96/products/{{this._id}}"
+          method="POST"
+        >
+          <input type="submit" value="Agregar al carrito" class="add-to-cart" />
+        </form>
       </div>
     </div>
   {{/each}}

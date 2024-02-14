@@ -1,4 +1,4 @@
-/*Body*/
+/*General*/
 
 body {
   background-color: orange;
@@ -7,6 +7,18 @@ body {
 a {
   text-decoration: none;
   color: black;
+}
+button {
+  padding: 10px 40px;
+  background-color: rgb(175, 174, 174);
+  border: 1px black solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease 0.3s;
+}
+button:hover {
+  background-color: #ff0000;
+  padding: 10px 60px;
 }
 
 /*Header*/
@@ -67,31 +79,6 @@ a {
   transition: ease 0.3s;
 }
 
-.delete-button {
-  padding: 10px 40px;
-  background-color: rgb(175, 174, 174);
-  border: 1px black solid;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: ease 0.3s;
-}
-.delete-button:hover {
-  background-color: #ff0000;
-  padding: 10px 60px;
-}
-
-.add-to-cart {
-  padding: 10px 40px;
-  background-color: rgb(175, 174, 174);
-  border: 1px black solid;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: ease 0.3s;
-}
-.add-to-cart:hover {
-  background-color: #ff0000;
-  padding: 10px 60px;
-}
 /*Form*/
 
 .form-container {
@@ -128,6 +115,44 @@ a {
   transition: ease 0.3s;
 }
 .form-button:hover {
+  background-color: #ff0000;
+  padding: 10px 60px;
+}
+
+/*Cart*/
+.cart-product-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem;
+  padding: 1rem 3%;
+  background-color: #ff5400;
+  border-radius: 1rem;
+}
+
+.cart-img {
+  width: 11%;
+}
+
+.cart-delete-button {
+  color: #ffffff;
+  background-color: #101010;
+  padding: 1rem;
+}
+
+.trash-can:hover {
+  background-color: #ff0000;
+  cursor: pointer;
+}
+
+.add-to-cart {
+  padding: 10px 40px;
+  background-color: rgb(175, 174, 174);
+  border: 1px black solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease 0.3s;
+}
+.add-to-cart:hover {
   background-color: #ff0000;
   padding: 10px 60px;
 }

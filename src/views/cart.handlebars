@@ -1,11 +1,18 @@
 <h2>Carrito</h2>
 <h2>ID del carrito: {{cartId}}</h2>
 
-<div class="container">
-  {{#each products}}
-    <p>Producto: {{this.product.title}}</p>
+{{#each products}}
+  <div class="cart-product-container">
+    <img
+      src="{{this.product.image}}"
+      alt="{{this.product.title}}"
+      class="cart-img"
+    />
+    <h2>Producto: {{this.product.title}}</h2>
 
-    <p>Precio: ${{this.product.price}}</p>
-    <p>Cantidad: {{this.quantity}}</p>
-  {{/each}}
-</div>
+    <h2>Precio: ${{this.product.price}}</h2>
+    <h2>Cantidad: {{this.quantity}}</h2>
+
+    <button class="cart-delete-button">Eliminar del carrito</button>
+  </div>
+{{/each}}

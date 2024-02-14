@@ -103,13 +103,15 @@ class CartsManager {
 
   async emptyCart(cartId) {
     try {
-      const cart = await CartsModel.findByIdAndUpdate(cartId, {
-        $set: { products: [] },
-      });
+      const cart = await this.getCartById(cartId);
       if (!cart) {
         console.log("No se encontro el carrito");
         return null;
       }
+      cart.products = [];
+      cart.markModified("products");
+      await cart.save();
+      return cart;
     } catch (error) {
       console.log(error);
     }
@@ -123,13 +125,17 @@ class CartsManager {
         return null;
       }
 
-      const productexists = await this.productExists(productId);
-      if (!productexists) {
-        console.log("El producto no existe");
-        return;
+      const productInCart = cart.products.find((p) =>
+        p.product.equals(productId)
+      );
+      if (!productInCart) {
+        console.log("El producto no existe en el carrito");
+        return null;
       }
 
-      productexists.quantity = newQuantity;
+      productInCart.quantity = newQuantity;
+      await cart.save();
+      return cart;
     } catch (error) {
       console.log(error);
     }

@@ -5,6 +5,7 @@ const CartManager = require("../dao/db/carts-manager-db.js");
 const cartManager = new CartManager();
 
 const ProductManager = require("../dao/db/product-manager-db.js");
+const { ReturnDocument } = require("mongodb");
 const productManager = new ProductManager();
 
 router.post("/", async (req, res) => {
@@ -68,7 +69,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
       quantity
     );
 
-    res.json(updatedCart.products);
+    res.redirect("/");
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -103,7 +104,7 @@ router.put("/:cid", async (req, res) => {
 router.put("/:cid/products/:pid", async (req, res) => {
   const cartId = req.params.cid;
   const productId = req.params.pid;
-  const { quantity } = req.body;
+  const newQuantity = req.body.quantity;
   try {
     const productExists = await productManager.getProductById(productId);
     const cartExists = await cartManager.getCartById(cartId);
@@ -122,12 +123,8 @@ router.put("/:cid/products/:pid", async (req, res) => {
       return;
     }
 
-    const updatedQuantity = await cartManager.addAQuantityOfProduct(
-      cartId,
-      productId,
-      quantity
-    );
-    res.json({ message: "Productos agregados con exito" }, updatedQuantity);
+    await cartManager.addAQuantityOfProduct(cartId, productId, newQuantity);
+    res.json({ message: "Productos agregados con exito" });
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -143,9 +140,7 @@ router.delete("/:cid/products/:pid", async (req, res) => {
   try {
     const productExists = await productManager.getProductById(productId);
     const cartExists = await cartManager.getCartById(cartId);
-    const productInCartExists = cartExists.products.find(
-      (product) => product.id == productId
-    );
+
     if (!productExists) {
       res.json({
         message: "No se encontro el producto",
@@ -160,18 +155,8 @@ router.delete("/:cid/products/:pid", async (req, res) => {
       return;
     }
 
-    if (!productInCartExists) {
-      res.json({
-        message: "El producto no se encuentra en el carrito",
-      });
-      return;
-    }
-
-    const updatedQuantity = await cartManager.deleteProductInCart(
-      cartId,
-      productId
-    );
-    res.json({ message: "Producto eliminado con exito" }, updatedQuantity);
+    await cartManager.deleteProductInCart(cartId, productId);
+    res.status(200).json({ message: "Producto eliminado con exito" });
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -182,8 +167,13 @@ router.delete("/:cid/products/:pid", async (req, res) => {
 });
 
 router.delete("/:cid", async (req, res) => {
-  const cartId = req.params.body;
+  const cartId = req.params.cid;
   try {
+    const cartExists = await cartManager.getCartById(cartId);
+    if (!cartExists) {
+      res.json({ message: "El carrito no existe" });
+      return;
+    }
     await cartManager.emptyCart(cartId);
     res.json({ message: "Carrito vaciado con exito" });
   } catch (error) {
