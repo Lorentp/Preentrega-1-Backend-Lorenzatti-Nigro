@@ -102,9 +102,6 @@ class ProductManager {
 
       if (!deletedProduct) {
         console.log("Error, no se encontro el producto");
-        res.status(404).json({
-          message: "No se encontro el producto",
-        });
         return null;
       }
       return deletedProduct;
