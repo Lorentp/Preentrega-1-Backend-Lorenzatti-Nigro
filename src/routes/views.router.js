@@ -6,6 +6,36 @@ const ProductModel = require("../dao/models/products.model.js");
 const CartsManager = require("../dao/db/carts-manager-db.js");
 const cartsManager = new CartsManager();
 
+router.get("/register", (req, res) => {
+  if (req.session.login) {
+    return res.redirect("/products");
+  }
+  res.render("register");
+});
+
+router.get("/login", async (req, res) => {
+  try {
+    if (req.session.login) {
+      return res.redirect("/products");
+    }
+    res.render("login");
+  } catch (error) {
+    console.log("Error del servidor", error);
+    res.status(404).json({
+      message: "Error de servidor",
+      error,
+    });
+  }
+});
+
+router.get("/profile", (req, res) => {
+  if (!req.session.login) {
+    return res.redirect("/login");
+  }
+
+  res.render("profile", { user: req.session.user });
+});
+
 router.get("/", async (req, res) => {
   try {
     res.render("index");
@@ -86,6 +116,7 @@ router.get("/products", async (req, res) => {
       totalPages: products.totalPages,
       prevLink,
       nextLink,
+      user: req.session.user,
     });
   } catch (error) {
     console.log("Error del servidor", error);

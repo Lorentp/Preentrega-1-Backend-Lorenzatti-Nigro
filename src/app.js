@@ -1,11 +1,13 @@
 //Puerto
-const PORT = 8080;
+const PORT = 3000;
 
 //Dependencias
 const express = require("express");
 const app = express();
-
+const passport = require("passport");
+const session = require("express-session");
 const socket = require("socket.io");
+const MongoStore = require("connect-mongo");
 
 //DataBase
 require("./database.js");
@@ -13,6 +15,7 @@ require("./database.js");
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
+const sessionRouter = require("./routes/sessions.router.js");
 
 //Conexion controllers
 const ProductManager = require("./dao/db/product-manager-db.js");
@@ -21,6 +24,18 @@ const productManager = new ProductManager();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"));
+app.use(
+  session({
+    secret: "secretSession",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://lorentp:Jalnlorenza2000@cluster0.lunvkoc.mongodb.net/ecommere?retryWrites=true&w=majority",
+      ttl: 100,
+    }),
+  })
+);
 
 //Handlebars
 const expressHandlebars = require("express-handlebars");
@@ -34,11 +49,18 @@ app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
+//Passport
+const initializePassport = require("./config/passport.config.js");
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Router
 app.use("/", viewsRouter);
 app.use("/realtimeproducts", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/session", sessionRouter);
 
 //Listen
 const httpServer = app.listen(PORT, () => {
