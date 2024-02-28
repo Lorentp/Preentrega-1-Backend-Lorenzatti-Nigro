@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
-
 mongoose
   .connect(
-    "mongodb+srv://lorentp:Jalnlorenza2000@cluster0.lunvkoc.mongodb.net/ecommere?retryWrites=true&w=majority"
+    "mongodb+srv://loren:jalnlorenza@coderbackend.zwmjgoq.mongodb.net/?retryWrites=true&w=majority&appName=coderbackend"
   )
   .then(() => console.log("Conexion a la base de datos exitosa"))
   .catch((error) =>

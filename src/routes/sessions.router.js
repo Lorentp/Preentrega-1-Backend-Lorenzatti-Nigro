@@ -14,12 +14,23 @@ router.post(
         message: "Error al iniciar sesion, usuario incorreto",
       });
 
-    req.session.user = {
-      first_name: req.user.first_name,
-      last_name: req.user.last_name,
-      age: req.user.age,
-      email: req.user.email,
-    };
+    if (req.user.email === "adminCoder@coder.com") {
+      req.session.user = {
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email,
+        age: req.user.age,
+        role: "admin",
+      };
+    } else {
+      req.session.user = {
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email,
+        age: req.user.age,
+        role: req.user.role,
+      };
+    }
 
     req.session.login = true;
 
@@ -33,11 +44,15 @@ router.get("/faillogin", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-  if (req.session.login) {
-    req.session.destroy();
-  }
+  try {
+    if (req.session.login) {
+      req.session.destroy();
+    }
 
-  res.status(200).send({ message: "Session deslogueada" }).redirect("/login");
+    res.status(200).redirect("/login");
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 });
 
 module.exports = router;

@@ -1,5 +1,5 @@
 //Puerto
-const PORT = 3000;
+const PORT = 8080;
 
 //Dependencias
 const express = require("express");
@@ -16,6 +16,7 @@ const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
 const sessionRouter = require("./routes/sessions.router.js");
+const usersRouter = require("./routes/users.router.js");
 
 //Conexion controllers
 const ProductManager = require("./dao/db/product-manager-db.js");
@@ -31,7 +32,7 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl:
-        "mongodb+srv://lorentp:Jalnlorenza2000@cluster0.lunvkoc.mongodb.net/ecommere?retryWrites=true&w=majority",
+        "mongodb+srv://loren:jalnlorenza@coderbackend.zwmjgoq.mongodb.net/?retryWrites=true&w=majority&appName=coderbackend",
       ttl: 100,
     }),
   })
@@ -61,6 +62,7 @@ app.use("/realtimeproducts", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/session", sessionRouter);
+app.use("/api/users", usersRouter);
 
 //Listen
 const httpServer = app.listen(PORT, () => {
@@ -83,13 +85,13 @@ io.on("connection", async (socket) => {
   socket.emit("products", await productManager.getProducts());
 
   socket.on("deleteProduct", async (id) => {
-    await manager.deleteProduct(id);
+    await productManager.deleteProduct(id);
     io.sockets.emit("products", await productManager.getProducts());
     console.log("Producto eliminado");
   });
 
   socket.on("addProduct", async (product) => {
-    await manager.addProduct(product);
+    await productManager.addProduct(product);
     io.sockets.emit("products", await productManager.getProducts());
     console.log("Producto agregado");
   });

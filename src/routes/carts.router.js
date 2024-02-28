@@ -11,7 +11,7 @@ const productManager = new ProductManager();
 router.post("/", async (req, res) => {
   try {
     await cartManager.createCart();
-    res.json({ status: "success", message: "Carrito creado" });
+    res.status(200).json({ status: "success", message: "Carrito creado" });
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -28,7 +28,7 @@ router.get("/:cid", async (req, res) => {
     if (cart) {
       res.json(cart.products);
     } else {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el carrito",
       });
     }
@@ -50,14 +50,14 @@ router.post("/:cid/products/:pid", async (req, res) => {
     const cartExists = await cartManager.getCartById(cartId);
 
     if (!productExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el producto",
       });
       return;
     }
 
     if (!cartExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el carrito",
       });
       return;
@@ -81,11 +81,11 @@ router.post("/:cid/products/:pid", async (req, res) => {
 
 router.put("/:cid", async (req, res) => {
   const cartId = req.params.cid;
-  const productsToCart = req.body.products;
+  const productsToCart = req.body;
   try {
     const cartExists = await cartManager.getCartById(cartId);
     if (!cartExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el carrito",
       });
       return;
@@ -110,21 +110,21 @@ router.put("/:cid/products/:pid", async (req, res) => {
     const cartExists = await cartManager.getCartById(cartId);
 
     if (!productExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el producto",
       });
       return;
     }
 
     if (!cartExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el carrito",
       });
       return;
     }
 
     await cartManager.addAQuantityOfProduct(cartId, productId, newQuantity);
-    res.json({ message: "Productos agregados con exito" });
+    res.json({ message: "Productos actualizado con exito" });
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -142,14 +142,14 @@ router.delete("/:cid/products/:pid", async (req, res) => {
     const cartExists = await cartManager.getCartById(cartId);
 
     if (!productExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el producto",
       });
       return;
     }
 
     if (!cartExists) {
-      res.json({
+      res.status(404).json({
         message: "No se encontro el carrito",
       });
       return;
@@ -171,7 +171,7 @@ router.delete("/:cid", async (req, res) => {
   try {
     const cartExists = await cartManager.getCartById(cartId);
     if (!cartExists) {
-      res.json({ message: "El carrito no existe" });
+      res.status(404).json({ message: "El carrito no existe" });
       return;
     }
     await cartManager.emptyCart(cartId);

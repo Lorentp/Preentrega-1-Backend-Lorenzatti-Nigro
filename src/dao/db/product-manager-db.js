@@ -14,13 +14,13 @@ class ProductManager {
     try {
       if (!title || !description || !price || !code || !stock || !category) {
         console.log("Todos los campos son obligatorios");
-        return;
+        return null;
       }
 
       const productexists = await ProductModel.findOne({ code: code });
       if (productexists) {
         console.log("El codigo debe ser unico");
-        return;
+        return null;
       }
 
       const newProduct = new ProductModel({

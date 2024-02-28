@@ -1,5 +1,6 @@
 const passport = require("passport");
 const local = require("passport-local");
+const { createHash, isValidPassword } = require("../utils/hashBcrypt");
 const UsersModel = require("../dao/models/users.model");
 const LocalStrategy = local.Strategy;
 
@@ -11,17 +12,17 @@ const initializePassport = () => {
         passReqToCallback: true,
         usernameField: "email",
       },
-      async (req, username, done) => {
-        const { first_name, last_name, email, age, password } = req.body;
+      async (req, username, password, done) => {
+        const { first_name, last_name, email, age } = req.body;
         try {
-          let user = await UsersModel.findOne({ email });
-          if (user) return done(null, false);
+          let userExists = await UsersModel.findOne({ email });
+          if (userExists) return done(null, false);
           let newUser = {
             first_name,
             last_name,
             email,
             age,
-            password,
+            password: createHash(password),
           };
 
           let result = await UsersModel.create(newUser);
@@ -41,14 +42,14 @@ const initializePassport = () => {
       },
       async (email, password, done) => {
         try {
-          const user = await UsersModel.findOne({ email });
-          if (!user) {
+          const userExists = await UsersModel.findOne({ email });
+          if (!userExists) {
             console.log("Usuario inexistente");
             return done(null, false);
           }
 
-          if (password) return done(null, false);
-          return done(null, user);
+          if (!isValidPassword(password, userExists)) return done(null, false);
+          return done(null, userExists);
         } catch (error) {
           return done(error);
         }

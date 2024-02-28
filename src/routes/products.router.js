@@ -10,9 +10,9 @@ router.get("/:pid", async (req, res) => {
   try {
     let product = await productManager.getProductById(pid);
     if (product) {
-      res.send(product);
+      res.status(200).send(product);
     } else {
-      res.send("Producto no encontrado");
+      res.status(404).send("Producto no encontrado");
     }
   } catch (error) {
     console.log(error);
@@ -86,7 +86,7 @@ router.post("/add", async (req, res) => {
   try {
     const newProduct = req.body;
     await productManager.addProduct(newProduct);
-    res.status(201).json({ message: "Producto agregado exitosamente" });
+    res.status(201).redirect("/products");
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -102,7 +102,7 @@ router.put("/update/:pid", async (req, res) => {
 
   try {
     if (!productExists) {
-      res.json({ message: "El producto no existe" });
+      res.status(404).json({ message: "El producto no existe" });
       return;
     }
     const updatedProduct = await productManager.updateProduct(
@@ -125,8 +125,15 @@ router.put("/update/:pid", async (req, res) => {
 router.delete("/delete/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
-    await productManager.deleteProduct(pid);
-    res.json({ message: "Producto eliminado exitosamente" });
+    const deletedProduct = await productManager.deleteProduct(pid);
+    if (!deletedProduct) {
+      res.status(404).send({
+        message:
+          "No se puede eliminar un producto que no existe, ingrese un ID válido",
+      });
+    } else {
+      res.json({ message: "Producto eliminado exitosamente" });
+    }
   } catch (error) {
     console.log(error);
     res.status(404).json({

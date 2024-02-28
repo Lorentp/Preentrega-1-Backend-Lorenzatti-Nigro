@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const UsersModel = require("../dao/models/users.model.js");
 
 const UsersManager = require("../dao/db/users-manager-db");
@@ -22,6 +23,7 @@ router.post(
       age: req.user.age,
       email: req.user.email,
       password: req.user.password,
+      role: "usuario",
     };
 
     req.session.login = true;
