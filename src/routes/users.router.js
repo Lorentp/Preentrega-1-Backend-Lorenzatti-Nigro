@@ -3,9 +3,6 @@ const router = express.Router();
 const passport = require("passport");
 const UsersModel = require("../dao/models/users.model.js");
 
-const UsersManager = require("../dao/db/users-manager-db");
-const usersManager = new UsersManager();
-
 router.post(
   "/",
   passport.authenticate("register", {

@@ -23,6 +23,7 @@ const initializePassport = () => {
             email,
             age,
             password: createHash(password),
+            role: "admin",
           };
 
           let result = await UsersModel.create(newUser);
@@ -37,21 +38,15 @@ const initializePassport = () => {
   passport.use(
     "login",
     new LocalStrategy(
-      {
-        usernameField: "email",
-      },
+      { usernameField: "email" },
       async (email, password, done) => {
         try {
-          const userExists = await UsersModel.findOne({ email });
-          if (!userExists) {
-            console.log("Usuario inexistente");
-            return done(null, false);
-          }
-
+          const userExists = await UserModel.findOne({ email });
+          if (!userExists) return done(null, false);
           if (!isValidPassword(password, userExists)) return done(null, false);
           return done(null, userExists);
         } catch (error) {
-          return done(error);
+          done(error);
         }
       }
     )

@@ -32,7 +32,7 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl:
-        "mongodb+srv://loren:jalnlorenza@coderbackend.zwmjgoq.mongodb.net/?retryWrites=true&w=majority&appName=coderbackend",
+        "mongodb+srv://loren:jalnlorenza@coderbackend.zwmjgoq.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=coderbackend",
       ttl: 100,
     }),
   })

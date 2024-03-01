@@ -5,14 +5,13 @@ const passport = require("passport");
 router.post(
   "/login",
   passport.authenticate("login", {
-    failureRedirect: "/api/sessions/faillogin",
+    failureRedirect: "/faillogin",
   }),
   async (req, res) => {
     if (!req.user)
-      return res.status(400).send({
-        status: "error",
-        message: "Error al iniciar sesion, usuario incorreto",
-      });
+      return resA
+        .status(400)
+        .send({ status: "error", message: "Credenciales invalidas" });
 
     if (req.user.email === "adminCoder@coder.com") {
       req.session.user = {
@@ -37,7 +36,6 @@ router.post(
     res.redirect("/products");
   }
 );
-
 router.get("/faillogin", async (req, res) => {
   console.log("Error de estrategia");
   res.send({ error: "fail" });
