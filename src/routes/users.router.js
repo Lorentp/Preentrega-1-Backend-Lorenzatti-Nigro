@@ -6,7 +6,7 @@ const UsersModel = require("../dao/models/users.model.js");
 router.post(
   "/",
   passport.authenticate("register", {
-    failureRedirect: "/failedregister",
+    failureRedirect: "api/sessions/failedregister",
   }),
   async (req, res) => {
     if (!req.user)
