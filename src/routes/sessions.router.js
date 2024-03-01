@@ -5,7 +5,7 @@ const passport = require("passport");
 router.post(
   "/login",
   passport.authenticate("login", {
-    failureRedirect: "/faillogin",
+    failureRedirect: "api/sessions/faillogin",
   }),
   async (req, res) => {
     if (!req.user)

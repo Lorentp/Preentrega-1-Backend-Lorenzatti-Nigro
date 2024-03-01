@@ -61,7 +61,7 @@ app.use("/", viewsRouter);
 app.use("/realtimeproducts", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/api/session", sessionRouter);
+app.use("/api/sessions", sessionRouter);
 app.use("/api/users", usersRouter);
 
 //Listen
