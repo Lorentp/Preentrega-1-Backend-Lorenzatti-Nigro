@@ -8,10 +8,11 @@ router.post(
     failureRedirect: "api/sessions/faillogin",
   }),
   async (req, res) => {
-    if (!req.user)
-      return resA
+    if (!req.user) {
+      return res
         .status(400)
         .send({ status: "error", message: "Credenciales invalidas" });
+    }
 
     if (req.user.email === "adminCoder@coder.com") {
       req.session.user = {
@@ -53,4 +54,19 @@ router.get("/logout", async (req, res) => {
   }
 });
 
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
+
+router.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  async (req, res) => {
+    req.session.user = req.user;
+    req.session.login = true;
+    res.redirect("/products");
+  }
+);
 module.exports = router;

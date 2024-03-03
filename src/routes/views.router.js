@@ -71,6 +71,10 @@ router.get("/products", async (req, res) => {
   let { limit, page, sort, query: filterQuery } = req.query;
 
   try {
+    if (!req.session.login) {
+      return res.redirect("/login");
+    }
+
     limit = parseInt(limit) || 4;
     page = parseInt(page) || 1;
     let sortOp = {};

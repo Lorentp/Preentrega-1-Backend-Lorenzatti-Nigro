@@ -22,10 +22,6 @@ router.post(
       password: req.user.password,
       role: "usuario",
     };
-
-    req.session.login = true;
-
-    res.redirect("/products");
   }
 );
 

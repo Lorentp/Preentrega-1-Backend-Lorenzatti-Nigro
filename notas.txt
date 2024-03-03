@@ -1,0 +1,7 @@
+github passport:
+Owned by: @Lorentp
+App ID: 848274
+Client ID: Iv1.2de541224b6575ba
+
+Client secret: d651b577563d0e60ce674d8a782aa4d82e37530f
+

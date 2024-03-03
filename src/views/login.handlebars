@@ -1,9 +1,22 @@
 <div>
-  <form action="/api/session/login" method="POST">
+  <form action="/api/sessions/login" method="POST">
     <h1>Usuario</h1>
-    <input type="text" placeholder="Ingrese su usuario" />
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="Ingrese su usuario"
+    />
     <h1>Contrasena</h1>
-    <input type="text" placeholder="Ingrese su contrasena" />
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Ingrese su contrasena"
+    />
     <button type="submit">Iniciar sesion</button>
   </form>
+  <a href="/register">Registrarme</a>
 </div>
+
+<a href="/api/sessions/github">Logear con Github</a>
