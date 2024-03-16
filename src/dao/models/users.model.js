@@ -20,6 +20,9 @@ const usersSchema = new mongoose.Schema({
   age: {
     type: Number,
   },
+  cartId: {
+    type: String,
+  },
   role: {
     type: String,
   },
