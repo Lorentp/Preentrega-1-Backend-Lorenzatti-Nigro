@@ -1,8 +1,8 @@
 const passport = require("passport");
 const local = require("passport-local");
 const { createHash, isValidPassword } = require("../utils/hashBcrypt");
-const UsersModel = require("../dao/models/users.model");
-const CartsManager = require("../dao/db/carts-manager-db");
+const UsersModel = require("../models/users.model");
+const CartsManager = require("../controllers/carts-controller-db");
 const cartManager = new CartsManager();
 const LocalStrategy = local.Strategy;
 const GitHubStrategy = require("passport-github2");

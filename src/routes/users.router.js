@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const UsersModel = require("../dao/models/users.model.js");
+const UsersModel = require("../models/users.model.js");
 
 router.post(
   "/",

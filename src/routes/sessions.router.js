@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const { isValidPassword } = require("../utils/hashBcrypt");
-const UsersModel = require("../dao/models/users.model");
+const UsersModel = require("../models/users.model");
 
 router.post(
   "/login",
@@ -24,7 +24,7 @@ router.post(
       first_name: "Private",
       last_name: "Private",
       age: "Private",
-      email: "adminCoder@coder.com",
+      email: process.env.ADMIN_EMAIL,
       password: "adminCod3r123",
       role: "admin",
     };

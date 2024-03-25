@@ -89,7 +89,21 @@ class CartsServices {
     }
   }
 
-  async empt() {}
+  async emptyCart(cartId) {
+    try {
+      const cart = await this.getCartById(cartId);
+      if (!cart) {
+        console.log("No se encontro el carrito");
+        return null;
+      }
+      cart.products = [];
+      cart.markModified("products");
+      await cart.save();
+      return cart;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 module.exports = CartsServices;

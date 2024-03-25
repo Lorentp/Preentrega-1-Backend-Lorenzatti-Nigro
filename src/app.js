@@ -8,6 +8,7 @@ const passport = require("passport");
 const session = require("express-session");
 const socket = require("socket.io");
 const MongoStore = require("connect-mongo");
+require("dotenv").config();
 
 //DataBase
 require("./database.js");
@@ -19,7 +20,7 @@ const sessionRouter = require("./routes/sessions.router.js");
 const usersRouter = require("./routes/users.router.js");
 
 //Conexion controllers
-const ProductManager = require("./dao/db/product-manager-db.js");
+const ProductManager = require("./controllers/product-controller-db.js");
 const productManager = new ProductManager();
 //Middleware
 app.use(express.json());
@@ -70,7 +71,7 @@ const httpServer = app.listen(PORT, () => {
 });
 
 //IO
-const MessageModel = require("./dao/models/chat.model.js");
+const MessageModel = require("./models/chat.model.js");
 const io = socket(httpServer);
 
 io.on("connection", async (socket) => {

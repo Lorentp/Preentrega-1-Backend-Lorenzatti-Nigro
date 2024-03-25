@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../dao/db/product-manager-db.js");
+const ProductManager = require("../controllers/product-controller-db.js");
 const productManager = new ProductManager();
-const ProductModel = require("../dao/models/products.model.js");
-const CartsManager = require("../dao/db/carts-manager-db.js");
+const ProductModel = require("../models/products.model.js");
+const CartsManager = require("../controllers/carts-controller-db.js");
 const cartsManager = new CartsManager();
 
 router.get("/", async (req, res) => {

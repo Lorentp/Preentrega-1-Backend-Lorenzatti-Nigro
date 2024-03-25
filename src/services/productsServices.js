@@ -33,6 +33,7 @@ class ProductsServices {
         status: true,
         thumbnails,
       });
+      console.log(newProduct);
       return await newProduct.save();
     } catch (error) {
       throw new Error("Error al crear el productos");

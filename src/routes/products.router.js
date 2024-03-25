@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-const ProductManager = require("../dao/db/product-manager-db.js");
-const productManager = new ProductManager();
+const ProductController = require("../controllers/product-controller-db");
+const productController = new ProductController();
 
-router.get("/", productManager.getProducts);
+router.get("/", productController.getProducts);
 
-router.get("/:pid", productManager.getProductsById);
+router.get("/:pid", productController.getProductsById);
 
-router.post("/add", productManager.CreateProducts);
+router.post("/add", productController.createProducts);
 
-router.put("/update/:pid", productManager.updateProduct);
+router.put("/update/:pid", productController.updateProduct);
 
-router.delete("/delete/:pid", productManager.deleteProduct);
+router.delete("/delete/:pid", productController.deleteProduct);
 
 module.exports = router;

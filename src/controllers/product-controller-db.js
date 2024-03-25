@@ -113,17 +113,18 @@ class ProductManager {
   }
 }*/
 
-class ProductManager {
-  async CreateProducts() {
+class ProductController {
+  async createProducts(req, res) {
     try {
-      const newProduct = await ProductsServices.CreateProducts(req.body);
-      return newProduct;
+      const newProduct = req.body;
+      await ProductsServices.createProducts(newProduct);
+      res.json(newProduct);
     } catch (error) {
       res.json(error);
     }
   }
 
-  async getProducts() {
+  async getProducts(req, res) {
     try {
       const products = await ProductsServices.getProducts();
       return products;
@@ -132,7 +133,7 @@ class ProductManager {
     }
   }
 
-  async getProductsById() {
+  async getProductsById(req, res) {
     try {
       const product = await ProductsServices.getProductsById(req.params.pid);
       return product;
@@ -140,7 +141,7 @@ class ProductManager {
       res.json(error);
     }
   }
-  async updateProduct() {
+  async updateProduct(req, res) {
     try {
       const updatedProduct = await ProductsServices.updateProduct(
         req.params.pid,
@@ -152,7 +153,7 @@ class ProductManager {
     }
   }
 
-  async deleteProduct() {
+  async deleteProduct(req, res) {
     try {
       const deletedProduct = await ProductsServices.deleteProduct(
         req.params.pid
@@ -163,4 +164,4 @@ class ProductManager {
     }
   }
 }
-module.exports = ProductManager;
+module.exports = ProductController;
