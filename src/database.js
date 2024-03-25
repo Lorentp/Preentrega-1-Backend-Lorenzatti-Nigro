@@ -22,7 +22,7 @@ class DataBase {
       console.log("Conexion ya existente");
       return this.#intance;
     }
-    tihs.#intance = new DataBase();
+    this.#intance = new DataBase();
     console.log("Conexion exitosa");
     return this.#intance;
   }

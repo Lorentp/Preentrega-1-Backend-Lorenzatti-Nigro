@@ -1,5 +1,7 @@
-const ProductModel = require("../models/products.model.js");
+const productsServices = require("../services/productsServices.js");
+const ProductsServices = new productsServices();
 
+/*
 class ProductManager {
   async addProduct({
     title,
@@ -109,6 +111,56 @@ class ProductManager {
       console.log(error);
     }
   }
-}
+}*/
 
+class ProductManager {
+  async CreateProducts() {
+    try {
+      const newProduct = await ProductsServices.CreateProducts(req.body);
+      return newProduct;
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
+  async getProducts() {
+    try {
+      const products = await ProductsServices.getProducts();
+      return products;
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
+  async getProductsById() {
+    try {
+      const product = await ProductsServices.getProductsById(req.params.pid);
+      return product;
+    } catch (error) {
+      res.json(error);
+    }
+  }
+  async updateProduct() {
+    try {
+      const updatedProduct = await ProductsServices.updateProduct(
+        req.params.pid,
+        req.body
+      );
+      return updatedProduct;
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
+  async deleteProduct() {
+    try {
+      const deletedProduct = await ProductsServices.deleteProduct(
+        req.params.pid
+      );
+      return deletedProduct;
+    } catch (error) {
+      res.json(error);
+    }
+  }
+}
 module.exports = ProductManager;

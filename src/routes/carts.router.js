@@ -5,21 +5,9 @@ const CartManager = require("../dao/db/carts-manager-db.js");
 const cartManager = new CartManager();
 
 const ProductManager = require("../dao/db/product-manager-db.js");
-const { ReturnDocument } = require("mongodb");
 const productManager = new ProductManager();
 
-router.post("/", async (req, res) => {
-  try {
-    await cartManager.createCart();
-    res.status(200).json({ status: "success", message: "Carrito creado" });
-  } catch (error) {
-    console.log(error);
-    res.status(404).json({
-      message: "Error de servidor",
-      error,
-    });
-  }
-});
+router.post("/", cartManager.createCart);
 
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
