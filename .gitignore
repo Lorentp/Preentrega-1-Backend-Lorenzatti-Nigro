@@ -1,2 +1,4 @@
 node_modules/
 notas.txt/
+.env.development/
+.env.production/
