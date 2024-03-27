@@ -27,9 +27,14 @@ class CartsController {
       const cart = await CartsServices.getCartById(req.session.user.cartId);
       const product = await ProductsServices.productExists(req.params.pid);
       const quantity = 1;
+      const newCart = await cartsServices.addProductToCart(
+        cart,
+        product,
+        quantity
+      );
 
       res.redirect("/products");
-      return cart;
+      return newCart;
     } catch (error) {
       res.json(error);
     }
@@ -39,15 +44,16 @@ class CartsController {
     try {
       const cart = await CartsServices.getCartById(req.session.user.cartId);
       const product = await ProductsServices.productExists(req.params.pid);
-      return cart;
+      const newCart = await CartsServices.deleteProductInCart(cart, product);
+      return newCart;
     } catch (error) {
       res.json(error);
     }
   }
   async emptyCart(req, res) {
     try {
-      const cart = await CartsServices.emptyCart(req.session.user.cartId);
-      return cart;
+      const newCart = await CartsServices.emptyCart(req.session.user.cartId);
+      return newCart;
     } catch (error) {
       res.json(error);
     }
