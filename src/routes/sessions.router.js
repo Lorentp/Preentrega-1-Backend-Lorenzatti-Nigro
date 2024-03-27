@@ -1,31 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { isValidPassword } = require("../utils/hashBcrypt");
-const UsersModel = require("../models/users.model");
+
+const configObject = require("../config/config");
 
 router.post(
   "/login",
   async (req, res, next) => {
     const { email, password } = req.body;
-    /*
-    if (!email && !password) {
-      return res.redirect("/login");
-    }
-    if (!email) {
-      return res.redirect("/login");
-    }
-    if (!password) {
-      return res.redirect("/login");
-    }
-    */
+
     const adminUser = {
       username: "Admin",
       first_name: "Private",
       last_name: "Private",
       age: "Private",
-      email: process.env.ADMIN_EMAIL,
-      password: "adminCod3r123",
+      email: configObject.admin_email,
+      password: configObject.admin_password,
       role: "admin",
     };
 
@@ -35,18 +25,7 @@ router.post(
       res.redirect("/products");
       return;
     }
-    /*
-    const user = await UsersModel.findOne({ email: email });
-    if (user) {
-      // Se verifica si el email y la contraseña son validos para iniciar sesión
-      if (user.email !== email || !isValidPassword(password, user)) {
-        return res.redirect("/login");
-      }
-    } else {
-      return res.redirect("/login");
-    }*/
 
-    /*Todo esto comentado esta en desarrolo fede no me pegues*/
     next();
   },
   passport.authenticate("login", {

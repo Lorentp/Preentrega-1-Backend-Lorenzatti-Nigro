@@ -9,9 +9,11 @@ const session = require("express-session");
 const socket = require("socket.io");
 const MongoStore = require("connect-mongo");
 require("dotenv").config();
+const configObject = require("./config/config.js");
 
 //DataBase
 require("./database.js");
+
 //Rutas
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
@@ -32,8 +34,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://loren:jalnlorenza@coderbackend.zwmjgoq.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=coderbackend",
+      mongoUrl: configObject.mongo_url,
       ttl: 100,
     }),
   })
@@ -66,12 +67,13 @@ app.use("/api/sessions", sessionRouter);
 app.use("/api/users", usersRouter);
 
 //Listen
-const httpServer = app.listen(PORT, () => {
-  console.log("Servidor levantado en el puerto:", PORT);
+const httpServer = app.listen(configObject.port, () => {
+  console.log("Servidor levantado en el puerto:", configObject.port);
 });
 
 //IO
 const MessageModel = require("./models/chat.model.js");
+
 const io = socket(httpServer);
 
 io.on("connection", async (socket) => {
